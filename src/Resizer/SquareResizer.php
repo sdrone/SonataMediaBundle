@@ -41,19 +41,25 @@ class SquareResizer implements ResizerInterface
     protected $mode;
 
     /**
+     * @var int
+     */
+    protected $flags;
+
+    /**
      * @var MetadataBuilderInterface
      */
     protected $metadata;
 
     /**
      * @param ImagineInterface         $adapter
-     * @param string                   $mode
+     * @param int                      $modeWithFlags
      * @param MetadataBuilderInterface $metadata
      */
-    public function __construct(ImagineInterface $adapter, $mode, MetadataBuilderInterface $metadata)
+    public function __construct(ImagineInterface $adapter, int $modeWithFlags, MetadataBuilderInterface $metadata)
     {
         $this->adapter = $adapter;
-        $this->mode = $mode;
+        $this->mode = $modeWithFlags & 0x0000ffff;
+        $this->flags = $modeWithFlags & 0xffff0000;
         $this->metadata = $metadata;
     }
 

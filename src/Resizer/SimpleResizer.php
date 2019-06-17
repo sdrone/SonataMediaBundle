@@ -29,9 +29,14 @@ class SimpleResizer implements ResizerInterface
     protected $adapter;
 
     /**
-     * @var string
+     * @var int
      */
     protected $mode;
+
+    /**
+     * @var int
+     */
+    protected $flags;
 
     /**
      * @var MetadataBuilderInterface
@@ -40,13 +45,14 @@ class SimpleResizer implements ResizerInterface
 
     /**
      * @param ImagineInterface         $adapter
-     * @param string                   $mode
+     * @param int                      $modeWithFlags
      * @param MetadataBuilderInterface $metadata
      */
-    public function __construct(ImagineInterface $adapter, $mode, MetadataBuilderInterface $metadata)
+    public function __construct(ImagineInterface $adapter, int $modeWithFlags, MetadataBuilderInterface $metadata)
     {
         $this->adapter = $adapter;
-        $this->mode = $mode;
+        $this->mode = $modeWithFlags & 0x0000ffff;
+        $this->flags = $modeWithFlags & 0xffff0000;
         $this->metadata = $metadata;
     }
 
@@ -61,8 +67,9 @@ class SimpleResizer implements ResizerInterface
 
         $image = $this->adapter->load($in->getContent());
 
+        dd($this->mode | $this->flags);
         $content = $image
-            ->thumbnail($this->getBox($media, $settings), $this->mode)
+            ->thumbnail($this->getBox($media, $settings), $this->mode | $this->flags)
             ->get($format, ['quality' => $settings['quality']]);
 
         $out->setContent($content, $this->metadata->get($media, $out->getName()));
