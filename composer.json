@@ -1,5 +1,5 @@
 {
-    "name": "sonata-project/media-bundle",
+    "name": "sdrone-fork/sonata-media-bundle",
     "type": "symfony-bundle",
     "description": "Symfony SonataMediaBundle",
     "keywords": [
@@ -23,6 +23,10 @@
         {
             "name": "Sonata Community",
             "homepage": "https://github.com/sonata-project/SonataMediaBundle/contributors"
+        },
+        {
+            "name": "SDrone Andrzej Mazurowski",
+            "homepage": "https://github.com/sdrone"
         }
     ],
     "require": {
